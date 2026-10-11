@@ -1,0 +1,58 @@
+# NexusCore-Spigot configuration
+# https://github.com/mustafabinguldev/NexusCore-Spigot
+
+# Unique name of this server in your network. NexusCore sends responses to
+# "<response-channel-prefix><server-name>", so every server needs its own name.
+server-name: "server-1"
+
+redis:
+  host: "localhost"
+  port: 6379
+  username: ""
+  password: ""
+  database: 0
+  timeout-ms: 2000
+  ssl: false
+
+# These must match the names NexusCore uses. The defaults match NexusCore.
+nexus:
+  stream-key: "darkland_nexus_stream"
+  stream-payload-field: "payload"
+  live-channel: "darkland_nexus_live"
+  response-channel-prefix: "darkland_nexus_"
+
+security:
+  # HMAC-SHA256 key shared with NexusCore (NEXUS_SIGNING_KEY on the core side).
+  # If empty, the NEXUS_SIGNING_KEY environment variable is used.
+  signing-key: ""
+  # Accept unsigned messages when no signing key is set. Mirrors
+  # NEXUS_ALLOW_UNSIGNED_MESSAGES on the core side. Keep false in production.
+  allow-unsigned-messages: false
+  # Maximum allowed clock difference for incoming messages.
+  timestamp-window-ms: 300000
+
+watchdog:
+  enabled: true
+  # NexusCore sends a LIVE heartbeat every second. If none arrives within this
+  # window, the bridge is considered disconnected.
+  timeout-ms: 5000
+  # Kick online players when the connection is lost.
+  kick-players: true
+  # Deny new logins while the connection is lost.
+  block-logins: true
+  kick-message: "&cThis server lost its connection to the data core. Please reconnect shortly."
+  login-message: "&cThe data core is unavailable. Please try again shortly."
+
+requests:
+  # Default timeout for requests that expect an answer (getData, ranking, ...).
+  timeout-ms: 5000
+  # GET_DATA is re-sent at this interval until an answer arrives or it times out.
+  retry-interval-ms: 1000
+  # Writes made while disconnected are queued and sent once the connection is back.
+  offline-queue-size: 10000
+
+# Run data callbacks and channel handlers on the main server thread.
+# Turn off only if your handlers are thread safe and never touch the Bukkit API.
+main-thread-callbacks: true
+
+debug: false

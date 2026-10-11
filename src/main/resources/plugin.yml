@@ -1,0 +1,19 @@
+name: NexusCore-Spigot
+version: '${project.version}'
+main: io.github.mustafabinguldev.nexusspigot.NexusSpigotPlugin
+api-version: '1.13'
+description: Bridge between Spigot servers and NexusCore.
+authors: [ mustafabinguldev ]
+website: https://github.com/mustafabinguldev/NexusCore-Spigot
+
+commands:
+  nexusbridge:
+    description: NexusCore bridge status.
+    usage: /<command> [status]
+    aliases: [ nbridge ]
+    permission: nexusbridge.admin
+
+permissions:
+  nexusbridge.admin:
+    description: Access to /nexusbridge.
+    default: op
